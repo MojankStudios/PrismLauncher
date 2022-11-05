@@ -122,6 +122,8 @@ MinecraftAccountPtr LoginDialog::newAccount(QWidget *parent, QString msg)
 {
     LoginDialog dlg(parent);
     dlg.ui->label->setText(msg);
+    dlg.ui->checkBox->setText(tr("Use custom authentication server"));
+    dlg.ui->authserverTextBox->setPlaceholderText(BuildConfig.AUTH_BASE);
     
     // Don't allow custom auth server unless we're sure the user owns the game
     if (!APPLICATION->accounts()->anyAccountIsValid()) {
