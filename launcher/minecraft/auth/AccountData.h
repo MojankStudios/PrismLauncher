@@ -39,6 +39,7 @@
 #include <QVector>
 #include <katabasis/Bits.h>
 #include <QJsonObject>
+#include "BuildConfig.h"
 
 struct Skin {
     QString id;
@@ -104,6 +105,9 @@ struct AccountData {
     void setClientToken(QString clientToken);
     void invalidateClientToken();
     void generateClientTokenIfMissing();
+
+    // Only for Mojang accounts
+    QString yggdrasilUrl = BuildConfig.AUTH_BASE;
 
     //! Yggdrasil access token, as passed to the game.
     QString accessToken() const;
