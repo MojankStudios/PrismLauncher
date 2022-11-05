@@ -294,6 +294,10 @@ QVariant AccountList::data(const QModelIndex &index, int role) const
             }
 
             case NameColumn:
+                if (account->accountData()->yggdrasilUrl != BuildConfig.AUTH_BASE) {
+                    return account->accountDisplayString() + " (" + account->accountData()->yggdrasilUrl + ")";
+                }
+
                 return account->accountDisplayString();
 
             case TypeColumn: {

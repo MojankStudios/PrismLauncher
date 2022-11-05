@@ -43,7 +43,15 @@ void LoginDialog::accept()
 
     // Setup the login task and start it
     m_account = MinecraftAccount::createFromUsername(ui->userTextBox->text());
+
+    QString yggdrasil_url = ui->authserverTextBox->text();
+
+    if (!yggdrasil_url.isEmpty() && ui->checkBox->isChecked()) {
+        m_account->accountData()->yggdrasilUrl = yggdrasil_url;
+    }
+
     m_loginTask = m_account->login(ui->passTextBox->text());
+
     connect(m_loginTask.get(), &Task::failed, this, &LoginDialog::onTaskFailed);
     connect(m_loginTask.get(), &Task::succeeded, this, &LoginDialog::onTaskSucceeded);
     connect(m_loginTask.get(), &Task::status, this, &LoginDialog::onTaskStatus);
