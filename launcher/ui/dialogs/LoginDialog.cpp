@@ -17,8 +17,11 @@
 #include "ui_LoginDialog.h"
 
 #include "minecraft/auth/AccountTask.h"
+#include "minecraft/auth/AccountList.h"
+#include "Application.h"
 
 #include <QtWidgets/QPushButton>
+#include <QMessageBox>
 
 LoginDialog::LoginDialog(QWidget *parent) : QDialog(parent), ui(new Ui::LoginDialog)
 {
@@ -119,6 +122,15 @@ MinecraftAccountPtr LoginDialog::newAccount(QWidget *parent, QString msg)
 {
     LoginDialog dlg(parent);
     dlg.ui->label->setText(msg);
+    
+    // Don't allow custom auth server unless we're sure the user owns the game
+    if (!APPLICATION->accounts()->anyAccountIsValid()) {
+        dlg.ui->checkBox->setDisabled(true);
+        dlg.ui->checkBox->setToolTip(tr(
+            "Sign in with a valid Microsoft or Mojang account before connecting to a custom authentication server"
+        ));
+    }
+
     if (dlg.exec() == QDialog::Accepted)
     {
         return dlg.m_account;

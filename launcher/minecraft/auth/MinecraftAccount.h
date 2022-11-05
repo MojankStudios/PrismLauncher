@@ -160,6 +160,10 @@ public: /* queries */
         return data.minecraftEntitlement.ownsMinecraft;
     }
 
+    bool usesCustomAuthServer() const {
+        return data.type == AccountType::Mojang && data.yggdrasilUrl != BuildConfig.AUTH_BASE;
+    }
+
     bool hasProfile() const {
         return data.profileId().size() != 0;
     }

@@ -294,7 +294,7 @@ QVariant AccountList::data(const QModelIndex &index, int role) const
             }
 
             case NameColumn:
-                if (account->accountData()->yggdrasilUrl != BuildConfig.AUTH_BASE) {
+                if (account->usesCustomAuthServer()) {
                     return account->accountDisplayString() + " (" + account->accountData()->yggdrasilUrl + ")";
                 }
 
@@ -663,7 +663,7 @@ bool AccountList::anyAccountIsValid()
 {
     for(auto account: m_accounts)
     {
-        if(account->ownsMinecraft()) {
+        if(account->ownsMinecraft() && !account->usesCustomAuthServer()) {
             return true;
         }
     }
