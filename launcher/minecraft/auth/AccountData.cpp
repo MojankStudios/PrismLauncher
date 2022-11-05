@@ -350,6 +350,9 @@ bool AccountData::resumeStateFromV3(QJsonObject data) {
         type = AccountType::MSA;
     } else if (typeS == "Mojang") {
         type = AccountType::Mojang;
+        if (data.value("yggdrasilURL").isString()) {
+            yggdrasilUrl = data.value("yggdrasilURL").toString();
+        }
     } else if (typeS == "Offline") {
         type = AccountType::Offline;
     } else {
@@ -391,6 +394,7 @@ QJsonObject AccountData::saveState() const {
     QJsonObject output;
     if(type == AccountType::Mojang) {
         output["type"] = "Mojang";
+        output["yggdrasilURL"] = yggdrasilUrl;
         if(legacy) {
             output["legacy"] = true;
         }
